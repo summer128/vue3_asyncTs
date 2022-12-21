@@ -1,14 +1,18 @@
 module.exports = [
     {
         path:'/',
+        name: '首页',
+        hidden: true,
         meta: {
-
+            title: '首页',
+            icon: 'shop',
+            noCache: false
         }
     },
     {
         name: '商品管理',
         path: '/shop',
-        hidden: false,
+        hidden: true,
         alwaysShow: true,
         redirect: 'noredirect',
         component: "Layout",
@@ -21,7 +25,7 @@ module.exports = [
             {
                 name: 'goodsAdd',
                 path: '/shop/goodsAdd',
-                hidden: false,
+                hidden: true,
                 alwaysShow: true,
                 redirect: 'noredirect',
                 component: "shop/goods/index",
@@ -36,7 +40,7 @@ module.exports = [
     {
         name: '文章管理',
         path: '/article',
-        hidden: false,
+        hidden: true,
         alwaysShow: true,
         redirect: 'noredirect',
         component: "Layout",
@@ -47,14 +51,25 @@ module.exports = [
         },
         children: [
             {
-                name: 'articlesAdd',
-                path: '/shop/articlesAdd',
-                hidden: false,
+                name: '添加文章',
+                path: '/article/addArticle',
+                hidden: true,
                 alwaysShow: true,
-                redirect: 'noredirect',
+                component: "article/addArticle",
+                meta: {
+                    title: '添加文章',
+                    icon: 'shop',
+                    noCache: false
+                },
+            },
+            {
+                name: '文章列表',
+                path: '/article/index',
+                hidden: true,
+                alwaysShow: true,
                 component: "article/index",
                 meta: {
-                    title: 'articlesAdd',
+                    title: '文章列表',
                     icon: 'shop',
                     noCache: false
                 },

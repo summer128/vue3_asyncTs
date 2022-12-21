@@ -1,10 +1,10 @@
 <template>
-$END$
+添加文章
 </template>
 
 <script>
 export default {
-name: "addArticle"
+  name: "addArticle"
 }
 </script>
 
