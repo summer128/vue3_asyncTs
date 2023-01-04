@@ -1,23 +1,14 @@
 <template>
-  <el-container style="height: 500px; border: 1px solid #eee">
-    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+  <el-container style="height: 100vh; border: 1px solid #eee">
+    <el-aside style="background-color: #545c64">
       <sider></sider>
     </el-aside>
-
     <el-container>
-      <el-header style="text-align: right; font-size: 12px">
-        <el-dropdown>
-          <i class="el-icon-setting" style="margin-right: 15px"></i>
-          <el-dropdown-menu>
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <span>王小虎</span>
+      <el-header style="font-size: 12px;display: flex;align-items: center;justify-content: flex-end;">
+        <headers></headers>
       </el-header>
-
       <el-main>
+        <pageTags v-if="store.isShowBread"></pageTags>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -26,8 +17,13 @@
 
 
 <script lang="ts" setup>
+import { UserFilled } from '@element-plus/icons-vue'
 import {reactive} from "vue"
 import sider from './sider.vue'
+import headers from './header.vue'
+import pageTags from './pageTag'
+import {useStore} from '@/store/index'
+const store = useStore()
 const data = reactive({
   item: {
     date: '2016-05-02',
@@ -46,12 +42,18 @@ const data = reactive({
 
 <style>
 .el-header {
-  background-color: #B3C0D1;
+  width: 100%;
+  /*background-color: #B3C0D1;*/
+  border-bottom: 1px solid #f1f1f1;
   color: #333;
   line-height: 60px;
 }
-
 .el-aside {
+  max-width: 200px;
   color: #333;
+}
+
+.skinIcon {
+  margin-right: 10px;
 }
 </style>

@@ -79,12 +79,13 @@ router.beforeEach((to,from,next) => {
         store.$state.hasMenus = false
         store.$state.asyncRoute = asyncroutes
         localStorage.setItem('asyncMenu', JSON.stringify(asyncroutes))
-        next({ ...to, replace: true });git add README.md
+        next({ ...to, replace: true });
       } else {
         next()
       }
     } else {
-      next('/login')
+      // 这样写有助于 用户如果想登录某一个页面，但是没有token，等到重新登录上之后，直接跳转到之前想要去的页面
+      next(`/login?redirect=${to.path}`)
     }
   }
 

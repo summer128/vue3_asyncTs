@@ -51,18 +51,6 @@ module.exports = [
         },
         children: [
             {
-                name: '添加文章',
-                path: '/article/addArticle',
-                hidden: true,
-                alwaysShow: true,
-                component: "article/addArticle",
-                meta: {
-                    title: '添加文章',
-                    icon: 'shop',
-                    noCache: false
-                },
-            },
-            {
                 name: '文章列表',
                 path: '/article/index',
                 hidden: true,
@@ -70,6 +58,72 @@ module.exports = [
                 component: "article/index",
                 meta: {
                     title: '文章列表',
+                    icon: 'shop',
+                    noCache: false
+                },
+            }
+        ]
+    },
+    {
+        name: '详情管理',
+        path: '/detail',
+        hidden: true,
+        alwaysShow: true,
+        redirect: 'noredirect',
+        component: "Layout",
+        meta: {
+            title: '文章管理',
+            icon: 'article',
+            noCache: false
+        },
+        children: [
+            {
+                name: '上传头像',
+                path: '/detail/upAvatar',
+                hidden: true,
+                alwaysShow: true,
+                component: "avatar/index",
+                meta: {
+                    title: '上传头像',
+                    icon: 'article',
+                    noCache: false
+                },
+            },
+            {
+                name: '基础详情页',
+                path: '/detail/basePage',
+                hidden: true,
+                alwaysShow: true,
+                component: "avatar/basePage",
+                meta: {
+                    title: '基础详情页',
+                    icon: 'article',
+                    noCache: false
+                },
+            },
+        ]
+    },
+    {
+        name: '系统管理',
+        path: '/system',
+        hidden: true,
+        alwaysShow: true,
+        redirect: 'noredirect',
+        component: "Layout",
+        meta: {
+            title: '系统管理',
+            icon: 'article',
+            noCache: false
+        },
+        children: [
+            {
+                name: '菜单管理',
+                path: '/system/menuManage',
+                hidden: true,
+                alwaysShow: true,
+                component: "system/menuManage",
+                meta: {
+                    title: '菜单管理',
                     icon: 'shop',
                     noCache: false
                 },

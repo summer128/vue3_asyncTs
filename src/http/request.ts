@@ -34,7 +34,7 @@ const http = axios.create({
 http.interceptors.request.use((config: AxiosRequestConfig) => {
     config.headers = config.headers || {}
     if (localStorage.getItem('token')) {
-        config.headers.token = localStorage.getItem('token') || ''
+        config.headers["cms-token"] = localStorage.getItem('token') || ''
     }
 
     // ? 加载
@@ -51,7 +51,6 @@ http.interceptors.response.use((response:AxiosResponse) => {
         endLoading()
         return Promise.reject(response.data)
     }
-    console.log(endLoading(), '停止loading...')
     // ? 结束 loading
     endLoading()
     return response

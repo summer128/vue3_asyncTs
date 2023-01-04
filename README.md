@@ -1,24 +1,24 @@
-# vue3_ts
+# 
+##interface 接口
+interface SquareConfig {
+  color?: string;
+  width?: number;
+  [propName: string]: any; 接收任意类型
+}
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Property 'author' does not exist on type 'never'.
+/*
+  保错：TS2339: Property 'author' does not exist on type 'never'.
+  1.将对象设置成 any
+  this.targetArray = this.options.find((item:any) => {
+      return item.articleId == val;
+  })
+  2.通过字符方式获取对象属性
+  this.targetArray = this.options.find((item) => {
+      return item["articleId"] == val;
+  });
+  3.声明断言，强制执行
+  this.targetArray = this.options.find((item) => {
+      return (item as any).articleId == val;
+  });
+*/
