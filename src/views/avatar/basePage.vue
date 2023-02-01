@@ -50,6 +50,7 @@
 
 <script lang="ts" setup>
 import {reactive} from 'vue'
+import {Logger} from "sass";
 const datas = reactive({
   baseMsg: [
     {
@@ -103,6 +104,50 @@ const datas = reactive({
     },
   ]
 })
+
+/* 泛型 */
+// 函数泛型
+function Person<T> (val: T): T {
+  return val
+}
+Person<number>(12)
+
+// 接口泛型
+interface P<T, A> {
+  name: T,
+  habits: A
+}
+
+const p1:P<string, string[]> = {
+  name: 'twj',
+  habits: ['watch books']
+}
+console.log(p1, '接口泛型')
+
+// 泛型类
+class People<T, N> {
+  name: T
+  age: N
+  constructor(name: T, age: N) {
+    this.name = name
+    this.age = age
+  }
+}
+
+const people1 = new People<string, number>('田', 123)
+
+// 泛型类约束,<T extends xxx>  传的参数中必须含有xxx
+interface Ilength {
+  length: number
+}
+
+function getLength<T extends Ilength> (arg: T) {
+  console.log(arg.length)
+  return arg
+}
+getLength<string>('22')
+
+
 </script>
 
 <style lang="scss" scoped>

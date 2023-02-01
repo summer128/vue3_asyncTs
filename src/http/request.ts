@@ -27,6 +27,7 @@ const startLoading = () => {
 const endLoading = () => {
     loading.close()
 }
+// 创建一个实例 axios.create({})
 const http = axios.create({
     baseURL: '/api'
 })

@@ -38,6 +38,33 @@ module.exports = [
         ]
     },
     {
+        name: '超级表格',
+        path: '/superTable',
+        hidden: true,
+        alwaysShow: true,
+        redirect: 'noredirect',
+        component: "Layout",
+        meta: {
+            title: '超级表格',
+            icon: 'shop',
+            noCache: false
+        },
+        children: [
+            {
+                name: 'baseTable',
+                path: '/proTable/baseTable',
+                hidden: true,
+                alwaysShow: true,
+                component: "proTable/baseTable",
+                meta: {
+                    title: '基本table',
+                    icon: 'shop',
+                    noCache: false
+                },
+            }
+        ]
+    },
+    {
         name: '文章管理',
         path: '/article',
         hidden: true,

@@ -11,15 +11,14 @@
           label-width="60px"
           class="loginForm"
           size="large"
-          :rules="data.rules"
       >
         <p>{{ systitle }}</p>
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="data.username" autocomplete="off" />
+          <el-input v-model="data.ruleForm.username" autocomplete="off" />
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input
-              v-model="data.password"
+              v-model="data.ruleForm.password"
               type="password"
               autocomplete="off"
           />
@@ -57,8 +56,9 @@ import { reactive } from 'vue'
 const data = reactive(new LoginData())
 const router = useRouter()
 const handleLogin = () => {
-  console.log(data,'数据')
-  loginApi({ ...data }).then((res) => {
+  const {ruleForm} = data
+  console.log(data,'数据', ruleForm)
+  loginApi(ruleForm).then((res) => {
     console.log(res.data, "登录信息");
     if (res.data.errCode === 0) {
       // 存储userMsg

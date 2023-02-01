@@ -62,6 +62,9 @@ const handleChangeDark = (val:any) => {
 const handleChangeBread = (val:any) =>{
   store.isShowBread = val
 }
+
+
+
 </script>
 
 <style lang="scss" scoped>

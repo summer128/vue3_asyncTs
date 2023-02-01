@@ -55,9 +55,10 @@ function loadAsyncRoutes(val:any[]) {
     return x
   })
 }
-
+localStorage.setItem('token','12ceshizxcvbnmasdfghjkl')
 const whiteList = ['/login', '/404','/register']
 router.beforeEach((to,from,next) => {
+  console.log(whiteList.includes(to.path), '1234')
   // 1.看跳转的path，有没有在白名单内
   if (whiteList.includes(to.path)) {
     next()
