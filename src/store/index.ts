@@ -4,47 +4,37 @@ interface States {
     asyncRoute: any[]
     hasMenus: boolean,
     siderIsFold: boolean,
-    tagsData: any[],
+    openPageTags: any[],
 
     isShowBread: boolean
 }
-export const useStore = defineStore('storeId', {
+export const useMenu = defineStore('menuId', {
     // 推荐使用 完整类型推断的箭头函数
     state: ():States => {
         return {
             asyncRoute: [],
             hasMenus: true,
             siderIsFold: false,
-            tagsData: [
-                {
-                    name: "首页",
-                    path: "/",
-                },
-            ],
-            isShowBread: false
+            openPageTags: [], // 用于标签页,
+            isShowBread: true
         }
     },
     getters:{
         SET_TAGS_DATA(state) {
-            return state.tagsData;
+            return state.openPageTags;
         },
     },
     actions: {
         addTagsData(val: any) {
-            const result = this.tagsData.findIndex((x) => x.path === val.path);
-            result === -1 ? this.tagsData.push(val) : "";
+            const result = this.openPageTags.findIndex((x) => x.path === val.path);
+            result === -1 ? this.openPageTags.push(val) : "";
         },
-        closeTag(val: any) {
-            const result = this.tagsData.findIndex((x) => x.path === val.path);
-            this.tagsData.splice(result, 1);
+        delCurrentPageTags(val: number) {
+            // const result = this.openPageTags.findIndex((x) => x.path === val.path);
+            this.openPageTags.splice(val, 1);
         },
         closeAllTags() {
-            this.tagsData = [
-                {
-                    name: "首页",
-                    path: "/",
-                },
-            ];
+            this.openPageTags = [];
         },
     },
 })

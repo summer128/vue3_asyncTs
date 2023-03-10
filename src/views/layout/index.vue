@@ -4,11 +4,10 @@
       <sider></sider>
     </el-aside>
     <el-container>
-      <el-header style="font-size: 12px;display: flex;align-items: center;justify-content: flex-end;">
+      <el-header style="height:50px;line-height:50px;font-size: 12px;padding: 0 0">
         <headers></headers>
       </el-header>
       <el-main>
-        <pageTags v-if="store.isShowBread"></pageTags>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -21,9 +20,9 @@ import { UserFilled } from '@element-plus/icons-vue'
 import {reactive} from "vue"
 import sider from './sider.vue'
 import headers from './header.vue'
-import pageTags from './pageTag'
-import {useStore} from '@/store/index'
-const store = useStore()
+
+import {useMenu} from '@/store/index'
+const store = useMenu()
 const data = reactive({
   item: {
     date: '2016-05-02',
@@ -43,13 +42,14 @@ const data = reactive({
 <style>
 .el-header {
   width: 100%;
-  /*background-color: #B3C0D1;*/
+  background-color: #18bc9c;
   border-bottom: 1px solid #f1f1f1;
   color: #333;
   line-height: 60px;
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
 }
 .el-aside {
-  max-width: 200px;
+  width: auto !important;
   color: #333;
 }
 

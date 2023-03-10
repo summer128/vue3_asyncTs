@@ -1,0 +1,51 @@
+{
+  "id": "3926274",
+  "name": "vue3_ts_cms",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "vue3项目用的图标",
+  "glyphs": [
+    {
+      "icon_id": "162882",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "201557",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "1304894",
+      "name": "展开菜单",
+      "font_class": "zhankaicaidan",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "4380879",
+      "name": "菜单",
+      "font_class": "menu",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "15994199",
+      "name": "avatar35",
+      "font_class": "35",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "15994201",
+      "name": "avatar40",
+      "font_class": "40",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    }
+  ]
+}

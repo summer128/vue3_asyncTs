@@ -1,69 +1,66 @@
 <template>
-  <div class="tagContainer">
-    <el-icon class="icon" :size="20" @click="handleIsFold">
-      <Fold />
-    </el-icon>
-    <div class="tagBox">
-      <el-tag
-        v-for="tag in tagsData"
-        :key="tag.path"
-        :class="isActive(tag) ? 'active' : ''"
-        class="mx-1"
-        :closable="tag.name == '首页' ? false : true"
-        :disable-transitions="false"
-        @click="switchTags(tag)"
-        @close="handleClose(tag)"
-      >
-        {{ tag.name }}
-      </el-tag>
+  <div class="pageTags">
+    <ul v-dragscroll>
+      <li>首页<i class="iconfont icon-guanbi"></i></li>
+      <li v-for="(item,index) of openPageTags" :key="item.name" @click="switchTags(item)" :class="isActive(item) ? 'active' : ''">
+        {{item.name}}
+        <i class="iconfont icon-guanbi" @click="delTagsItem(index)"></i>
+      </li>
+    </ul>
+    <div class="tagsTool">
+      <i class="iconfont icon-shezhi" @click="showTagstoolDrop"></i>
+      <div class="tagstoolDrop" :style="{'display': datas.isTagstoolDrop}">
+        <p @click="handleCloseAll">关闭全部</p>
+        <p @click="handleCloseCurrent">关闭当前标签</p>
+        <p @click="closeOthersTags">关闭其他</p>
+      </div>
     </div>
-    <el-dropdown>
-      <span class="el-dropdown-link">
-        <el-icon><Setting /></el-icon>
-      </span>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item @click="handleCloseCurrent"
-            >关闭当前页签</el-dropdown-item
-          >
-          <el-dropdown-item @click="handleCloseAll"
-            >关闭所有页签</el-dropdown-item
-          >
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
   </div>
+
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-import { useStore } from "@/store";
+import { ref,reactive } from "vue";
+import { useMenu } from "@/store";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 
+/*
+定义默认参数 data
+ */
+const datas = reactive({
+  isTagstoolDrop: 'none'
+})
 
+/*
+引用属性
+ */
 const router = useRouter();
 const visible = ref(false);
 // 折叠侧边栏-菜单
-const mainStore = useStore();
-const { tagsData } = storeToRefs(mainStore);
-const handleIsFold = () => {
-  mainStore.$patch({
-    siderIsFold: !mainStore.siderIsFold,
-  });
-};
+const mainStore = useMenu();
+const { openPageTags } = storeToRefs(mainStore);
+
 const isActive = (val: any) => {
+  console.log(router.currentRoute.value.path, val.path, '当前的数据')
   return router.currentRoute.value.path === val.path;
 };
+const showTagstoolDrop = () => {
+  if (datas.isTagstoolDrop === 'none') {
+    datas.isTagstoolDrop = 'block'
+  } else {
+    datas.isTagstoolDrop = 'none'
+  }
+}
 // 关闭当前标签
-const handleClose = (tag: any) => {
-  mainStore.closeTag(tag);
+const delTagsItem = (val: any) => {
+  mainStore.delCurrentPageTags(val);
 };
-// 关闭当前选中的数据
+// 下拉框-关闭当前选中的数据
 const handleCloseCurrent = () => {
   console.log(router.currentRoute.value.meta, "当前的数据");
   let currentRoute = router.currentRoute.value.meta;
-  mainStore.closeTag(currentRoute);
+  mainStore.delCurrentPageTags(currentRoute);
 };
 // 关闭全部
 const handleCloseAll = () => {
@@ -80,29 +77,63 @@ const closeOthersTags = () => {};
 </script>
 
 <style lang="scss" scoped>
-.tagContainer {
-  width: 100%;
-  height: 30px;
-  background: #f6f6f6;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  .icon {
-    flex-grow: 0.2;
+.active {
+  background: #cccccc !important;
+}
+.pageTags {
+  background: silver;
+  .iconfont, p {
+    cursor: pointer;
   }
-  .tagBox {
-    flex-grow: 23.8;
-    .mx-1 {
-      margin: 2px;
+  ul {
+    width: calc(100% - 150px);
+    height: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    float: left;
+    li {
+      display: inline-block;
+      padding: 0 4px;
+      height: 50px;
+      background: white;
+      margin-right: 2px;
+      white-space: nowrap;
       cursor: pointer;
+      .iconfont {
+        vertical-align: bottom;
+        padding: 0 1px;
+        display: none;
+      }
+    }
+    li:hover .iconfont {
+      display: inline-block;
     }
   }
-  .el-icon {
-    margin: 0 4px;
-  }
-  .active {
-    background: #cdcdcd;
+  .tagsTool {
+    width: 30px;
+    height: 50px;
+    float: right;
+    text-align: center;
+    border-left: 1px solid gainsboro;
+    position: relative;
+    .tagstoolDrop {
+      width: 100px;
+      padding: 4px 0;
+      text-align: center;
+      position: absolute;
+      left: -68px;
+      top: 46px;
+      p {
+        height: 30px;
+        line-height: 30px;
+        margin: 0;
+        background: whitesmoke;
+        border-bottom: 1px solid gainsboro;
+      }
+      p:last-child {
+        border-bottom:none;
+      }
+    }
   }
 }
 </style>

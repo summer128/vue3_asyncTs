@@ -1,4 +1,10 @@
-/* 滚动条优化 start */
+ul,li {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+  /* 滚动条优化 start */
 ::-webkit-scrollbar{
   width:8px;
   height:8px;

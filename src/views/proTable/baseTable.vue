@@ -1,5 +1,10 @@
 <template>
-<ProTable :columns="columns"></ProTable>
+<ProTable :columns="columns">
+  <template #asyncBtn>
+    <el-button type="primary" @click="search">搜索</el-button>
+    <el-button type="primary" @click="search">搜索1</el-button>
+  </template>
+</ProTable>
 </template>
 
 <script lang="ts" setup>
@@ -7,19 +12,19 @@ import {reactive} from 'vue'
 import {ColumnProps} from '@/components/proTable/components'
 import ProTable from '@/components/proTable'
 
-// 表格配置项
+// 表格表头-配置项
 const columns: ColumnProps[] = [
   { type: "selection", fixed: "left", width: 80 },
   { type: "index", label: "#", width: 80 },
   {
     prop: "username",
     label: "用户姓名",
-    search: { el: "input" }
+    search: { el: "input",disabled: false }
   },
   {
     prop: "gender",
     label: "性别",
-    search: { el: "select" },
+    search: { el: "select",disabled: false },
     fieldNames: { label: "genderLabel", value: "genderValue" }
   },
   // 多级 prop
@@ -39,7 +44,7 @@ const columns: ColumnProps[] = [
   {
     prop: "createTime",
     label: "创建时间",
-    width: 200,
+    width: 120,
     search: {
       el: "date-picker",
       span: 2,
@@ -47,7 +52,7 @@ const columns: ColumnProps[] = [
       defaultValue: ["2022-11-12 11:35:00", "2022-12-12 11:35:00"]
     }
   },
-  { prop: "operation", label: "操作", fixed: "right", width: 330 }
+  { prop: "operation", label: "操作", fixed: "right", width: 100 }
 ];
 </script>
 

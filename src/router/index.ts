@@ -7,8 +7,8 @@ import Layout from '../views/layout/index'
 // @ts-ignore
 import pinia from '../store/store'
 // @ts-ignore
-import { useStore } from "../store/index"
-const store = useStore(pinia)  // 这里一定要把 pinia传入进去
+import { useMenu } from "../store/index"
+const store = useMenu(pinia)  // 这里一定要把 pinia传入进去
 console.log(store.$state.hasMenus, '获取pinia的数据')
 
 
@@ -70,7 +70,7 @@ router.beforeEach((to,from,next) => {
       if (hasMenus) {
         const asyncroutes = loadAsyncRoutes(asyncRouter)
         // 在末尾添加404的处理
-        // asyncroutes.push({path:'/:catchAll(.*)', redirect: '/404' })
+        asyncroutes.push({path:'/:catchAll(.*)', redirect: '/404' })
 
         // 添加到动态路由当中
         asyncroutes.forEach(x => {

@@ -34,13 +34,13 @@ import {
 } from '@element-plus/icons-vue'
 import {reactive} from 'vue'
 import {useRouter} from 'vue-router'
-import { useStore } from "@/store/index";
+import { useMenu } from "@/store/index";
 import { storeToRefs } from "pinia";
 import asyncRouter from '@/utils/asyncRoutes'
 
 const router = useRouter()
 // 获pinia数据
-const mainStore = useStore();
+const mainStore = useMenu();
 // const { siderIsFold } = storeToRefs(mainStore);
 
 const datas = reactive({
