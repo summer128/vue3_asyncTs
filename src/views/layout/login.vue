@@ -57,27 +57,17 @@ const data = reactive(new LoginData())
 const router = useRouter()
 const handleLogin = () => {
   const {ruleForm} = data
-  console.log(data,'数据', ruleForm)
   loginApi(ruleForm).then((res) => {
-    console.log(res.data, "登录信息");
-    if (res.data.errCode === 0) {
-      // 存储userMsg
-      localStorage.setItem("userMsg", JSON.stringify(res.data.data));
-      localStorage.setItem("token", JSON.stringify(res.data.data["cms-token"]));
-      if (res.data.data["cms-token"]) {
+    console.log(res.data, "登录信息::::",);
+    if (res.data.status === 0) {
+      localStorage.setItem("Authorization", JSON.stringify(res.data["token"]));
+      if (res.data["token"]) {
         router.push("/");
       }
-      ElMessage({
-        message: res.data.message,
-        type: "success",
-      });
-    } else {
-      ElMessage.error(res.data.message);
     }
   });
 };
 const handleRegister = () => {
-  console.log('去注册！', router)
   router.push({path: 'register'});
 };
 </script>

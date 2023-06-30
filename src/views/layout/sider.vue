@@ -65,6 +65,8 @@ const changeSidebar = (index:string) => {
   console.log(currentRoute,'1234')
   mainStore.addTagsData(currentRoute[0]);
 };
+
+console.log(router.currentRoute.value.path,'000')
 </script>
 
 <style scoped>

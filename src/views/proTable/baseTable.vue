@@ -24,7 +24,20 @@ const columns: ColumnProps[] = [
   {
     prop: "gender",
     label: "性别",
-    search: { el: "select",disabled: false },
+    search: {
+      el: "select",
+      disabled: false,
+      options: [
+        {
+          key:'0',
+          value: '女'
+        },
+        {
+          key:'1',
+          value: '男'
+        }
+      ]
+    },
     fieldNames: { label: "genderLabel", value: "genderValue" }
   },
   // 多级 prop
@@ -38,7 +51,17 @@ const columns: ColumnProps[] = [
     fieldNames: { label: "userLabel", value: "userStatus" },
     search: {
       el: "tree-select",
-      props: { props: { label: "userLabel" }, nodeKey: "userStatus" }
+      props: { props: { label: "userLabel" }, nodeKey: "userStatus" },
+      options: [
+        {
+          key:'0',
+          value: '未签收'
+        },
+        {
+          key:'1',
+          value: '已签收'
+        }
+      ]
     }
   },
   {
@@ -48,7 +71,7 @@ const columns: ColumnProps[] = [
     search: {
       el: "date-picker",
       span: 2,
-      props: { type: "datetimerange", valueFormat: "YYYY-MM-DD HH:mm:ss" },
+      props: { type: "date", valueFormat: "YYYY-MM-DD" },
       defaultValue: ["2022-11-12 11:35:00", "2022-12-12 11:35:00"]
     }
   },

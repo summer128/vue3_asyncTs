@@ -29,13 +29,14 @@ const endLoading = () => {
 }
 // 创建一个实例 axios.create({})
 const http = axios.create({
-    baseURL: '/api'
+    baseURL: 'http://127.0.0.1:3000'
 })
 // * 请求拦截
 http.interceptors.request.use((config: AxiosRequestConfig) => {
     config.headers = config.headers || {}
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';  //此处是增加的代码，设置请求头的类型
     if (localStorage.getItem('token')) {
-        config.headers["cms-token"] = localStorage.getItem('token') || ''
+        config.headers["Authorization"] = localStorage.getItem('Authorization') || ''
     }
 
     // ? 加载
@@ -44,21 +45,46 @@ http.interceptors.request.use((config: AxiosRequestConfig) => {
 })
 
 // * 响应拦截
+// http.interceptors.response.use((response:AxiosResponse) => {
+//     const code:number = response.data.errCode
+//     console.log(response.data.code, response)
+//     if(code !== 0) {
+//         ElMessage.error(MESS[code]);
+//         endLoading()
+//         return Promise.reject(response.data)
+//     }
+//     // ? 结束 loading
+//     endLoading()
+//     return response
+// }, err => {
+//     endLoading()
+//     // ? 错误提醒
+//     return Promise.reject(err)
+// })
+
+
 http.interceptors.response.use((response:AxiosResponse) => {
-    const code:number = response.data.errCode
-    console.log(response.data.code, response)
-    if(code !== 0) {
+    // console.log(response, '响应数据')
+    const code:number = response.data.status
+    if (response.status === 200) {
+        if(code !== 0) {
+            ElMessage.error(response.data.message);
+            endLoading()
+        } else {
+            ElMessage.success(response.data.message);
+        }
+    } else {
+        // 状态码报错
         ElMessage.error(MESS[code]);
         endLoading()
         return Promise.reject(response.data)
     }
-    // ? 结束 loading
     endLoading()
+    // ? 结束 loading
     return response
 }, err => {
     endLoading()
     // ? 错误提醒
     return Promise.reject(err)
 })
-
 export default http

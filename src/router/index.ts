@@ -55,16 +55,14 @@ function loadAsyncRoutes(val:any[]) {
     return x
   })
 }
-localStorage.setItem('token','12ceshizxcvbnmasdfghjkl')
 const whiteList = ['/login', '/404','/register']
 router.beforeEach((to,from,next) => {
-  console.log(whiteList.includes(to.path), '1234')
   // 1.看跳转的path，有没有在白名单内
   if (whiteList.includes(to.path)) {
     next()
   } else {
     // 2.判断本地有没有token，有token直接免登录
-    if(localStorage.getItem('token')){
+    if(localStorage.getItem('Authorization')){
       //3. 是否需要动态加载菜单
       const hasMenus = store.$state.hasMenus // 先写死， 判断接口是否返回路由菜单
       if (hasMenus) {
@@ -89,7 +87,6 @@ router.beforeEach((to,from,next) => {
       next(`/login?redirect=${to.path}`)
     }
   }
-
 })
 
 export default router

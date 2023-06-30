@@ -42,7 +42,7 @@ const data = reactive({
 <style>
 .el-header {
   width: 100%;
-  background-color: #18bc9c;
+  background-color: #f2f3f5;
   border-bottom: 1px solid #f1f1f1;
   color: #333;
   line-height: 60px;

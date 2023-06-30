@@ -1,13 +1,15 @@
 module.exports = [
     {
-        path:'/',
+        path:'/home',
         name: '首页',
         hidden: true,
         meta: {
             title: '首页',
             icon: 'shop',
             noCache: false
-        }
+        },
+        redirect: 'layout/Home',
+        component: 'layout/Home'
     },
     {
         name: '商品管理',

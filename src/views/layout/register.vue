@@ -40,10 +40,9 @@ const formRef = ref();
 // 注册按钮
 function submitForm() {
   registerApi({ ...data }).then((res) => {
-    if (res.data.errCode === 0) {
-      ElMessage.success(res.data.message);
+    if (res.status === 0) {
+      ElMessage.success(res.message);
     }
-    console.log(data, res, "注册数据");
   });
   router.push("/");
 }

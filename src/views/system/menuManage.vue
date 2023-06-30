@@ -12,6 +12,8 @@
       border
       default-expand-all
   >
+
+
     <el-table-column prop="name" label="菜单名" sortable />
     <el-table-column prop="path" label="地址" sortable />
     <el-table-column prop="alwaysShow" label="是否隐藏" sortable />

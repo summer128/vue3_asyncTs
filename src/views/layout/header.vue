@@ -12,6 +12,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="a">退出登录</el-dropdown-item>
+            <el-dropdown-item @click="replaceAvatar">修改头像</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -79,6 +80,10 @@ const handleChangeDark = (val:any) => {
 }
 const handleChangeBread = (val:any) =>{
   store.isShowBread = val
+}
+
+const replaceAvatar = (val:any) => {
+  console.log('change avrtar')
 }
 
 

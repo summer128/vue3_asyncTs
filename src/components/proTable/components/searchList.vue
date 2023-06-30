@@ -1,9 +1,9 @@
 <template>
-  <el-card shadow="always">
+  <el-card class="searchCard" shadow="always">
     <el-form :inline="true" class="demo-form-inline" ref="ruleFormRef">
       <el-row :gutter="20">
         <template v-for="(item, index) in datas.newSearchList" :key="item.prop">
-          <el-col :span="8" v-if="item?.search" :style="{display: datas.isHideSearch && index >= 5 ? 'none': 'block'}">
+          <el-col :span="8" v-if="item?.search" :style="{display: datas.isHideSearch && index >= 6 ? 'none': 'block'}">
             <el-form-item :label="item.label">
               <component
                   v-if="item?.search?.el"
@@ -12,26 +12,31 @@
                   :placeholder="placeholderTxt(item)"
                   clearable
                   :disabled="item?.search.disabled"
+                  :type="item?.search?.props?.type"
+                  :value-format="item?.search?.props?.valueFormat"
               >
                 <template v-if="item?.search?.el === 'select'" #default>
                   <el-option
-                      v-for="op in item.option"
-                      :key="op[item.optionLabel || 'label']"
-                      :value="op[item.optionValue || 'value']"
-                      :label="op[item.optionLabel || 'label']"
+                      v-for="op in item?.search?.options"
+                      :key="op.value"
+                      :value="op.key"
+                      :label="op.value"
                   />
                 </template>
               </component>
             </el-form-item>
           </el-col>
         </template>
-        <el-form-item>
-          <el-button type="primary" @click="props.searchFn">搜索</el-button>
-          <el-button @click="props.resetFn(ruleFormRef)">重置</el-button>
-          <el-button type="primary" link class="search-isOpen" @click="isShow">{{datas.isHideSearch ? '展开' : '折叠'}}</el-button>
-        </el-form-item>
+<!--        <el-form-item style="display: flex;justify-content: right">-->
+<!--          -->
+<!--        </el-form-item>-->
       </el-row>
     </el-form>
+    <div class="serchSiderBtn">
+      <el-button type="primary" @click="props.searchFn">搜索</el-button>
+      <el-button @click="props.resetFn(ruleFormRef)">重置</el-button>
+      <el-button type="primary" link class="search-isOpen" @click="isShow" v-if="datas.newSearchList.length <= 6 ? false : true">{{datas.isHideSearch ? '展开' : '折叠'}}</el-button>
+    </div>
   </el-card>
 </template>
 
@@ -48,8 +53,8 @@ let datas = reactive({
 
 onMounted(() => {
   const List = props.columns.filter(x => x?.search)
-  console.log(List, '9999')
   datas.newSearchList = List
+  console.log(List, '9999',datas.newSearchList.length)
 })
 
 
@@ -89,6 +94,21 @@ const isShow = () => {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.searchCard {
+  overflow: hidden;
+  .demo-form-inline {
+    width: 94%;
+    float: left;
+  }
+  .serchSiderBtn {
+    width: 6%;
+    float: right;
+    button {
+      margin-bottom: 10px;
+      margin-left: 0 !important;
+    }
+  }
+}
 
 </style>

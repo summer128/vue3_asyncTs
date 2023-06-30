@@ -1,8 +1,8 @@
 import http from './request';
 // 注册
-export const registerApi = (params: any) => http.post("/register", params);
+export const registerApi = (params: any) => http.post("/users/register", params);
 // 登录
-export const loginApi = (params: any) => http.post("/login", params);
+export const loginApi = (params: any) => http.post("/users/login", params);
 // 添加文章
 export const addArticle = (params: any) => http.post("/article/add", params);
 // 文章列表

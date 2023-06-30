@@ -1,6 +1,7 @@
 <template>
   <!-- 查询条件 -->
-  <SearchForm :columns="props.columns" :searchParam="searchParam" :searchFn="searchFn" :resetFn="resetFn"></SearchForm>
+  <SearchForm class="searchForm" :columns="props.columns" :searchParam="searchParam" :searchFn="searchFn" :resetFn="resetFn"></SearchForm>
+
   <el-card class="box-card">
     <!-- 操作按钮 -->
     <div class="oprateBtn">
@@ -9,14 +10,15 @@
       </div>
       <!-- 固定栏目-按钮 -->
       <div class="static_oprateBtn">
-        <p><i class="iconfont icon-shezhi"></i></p>
-        <p><i class="iconfont icon-shezhi"></i></p>
-        <p><i class="iconfont icon-shezhi"></i></p>
-        <p><i class="iconfont icon-shezhi"></i></p>
+        <p @click="handleRefresh">sx</p>
+        <p @click="handlePrint">dy</p>
+        <p @click="handleColuSet">ls</p>
+        <p @click="handleSearch">ss</p>
       </div>
     </div>
+
     <!-- 表格   -->
-    <el-table :data="asyncTableData" border style="width: 100%">
+    <el-table :data="asyncTableData" border style="width: 100%;margin-bottom: 10px">
       <el-table-column
           v-for="item of data.asyncHeader"
           :prop="item.prop"
@@ -24,12 +26,14 @@
           :width="item.width ? item.width : 120 "
       ></el-table-column>
     </el-table>
+    <Pagination :pageable="pageable" :handleSizeChange="handleSizeChange" :handleCurrentChange="handleCurrentChange"></Pagination>
   </el-card>
 
 </template>
 
 <script lang="ts" setup name="proTable">
 import SearchForm from './components/searchList'
+import Pagination from './components/pagination'
 import {onMounted, reactive} from 'vue'
 import {ColumnProps} from '@/components/proTable/components/index'
 import { useTable } from '@/hooks/useTable'
@@ -41,7 +45,7 @@ import { useTable } from '@/hooks/useTable'
 const data = reactive({
   asyncHeader: []
 })
-const { asyncTableData,isHideSearch,searchParam,searchFn,resetFn } = useTable()
+const { asyncTableData,searchParam,searchFn,resetFn,pageable,handleSizeChange,handleCurrentChange,handleRefresh,handlePrint,handleColuSet,handleSearch } = useTable()
 /*
 ts-定义数据类型
  */
@@ -65,6 +69,10 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.searchForm,.oprateBtn {
+  margin-bottom: 10px;
+}
+
 .oprateBtn {
   display: flex;
   justify-content: space-between;
