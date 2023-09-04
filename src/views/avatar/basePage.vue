@@ -2,7 +2,7 @@
   <el-card class="box-card">
     <template #header>
       <div class="card-header">
-        <span>基本信息</span>
+        <span>基本信息-信息+1</span>
       </div>
     </template>
     <el-form :inline="true" class="demo-form-inline">
