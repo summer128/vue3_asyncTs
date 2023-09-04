@@ -15,7 +15,7 @@
           <el-icon><icon-menu /></el-icon>
           <span>{{item.name}}</span>
         </template>
-        <el-menu-item v-for="chItem of item.children"  :key="chItem.path" :index="chItem.path" v-show="chItem.hidden">{{chItem.name}}</el-menu-item>
+        <el-menu-item v-for="chItem of item.children"  :key="chItem.path" :index="chItem.path" v-show="chItem.isHidden">{{chItem.name}}</el-menu-item>
       </el-sub-menu>
       <el-menu-item v-else :index="item.path">
         <el-icon><setting /></el-icon>
@@ -35,38 +35,48 @@ import {
 import {reactive} from 'vue'
 import {useRouter} from 'vue-router'
 import { useMenu } from "@/store/index";
-import { storeToRefs } from "pinia";
-import asyncRouter from '@/utils/asyncRoutes'
 
 const router = useRouter()
+console.log(router.getRoutes(), '动态路由')
+
 // 获pinia数据
 const mainStore = useMenu();
-// const { siderIsFold } = storeToRefs(mainStore);
 
 const datas = reactive({
-  menus: []
+  menus: [] as any[],
+  toPage: {}
 })
 
-// 获取sider数据
-const localMenu = JSON.parse(localStorage.getItem('asyncMenu'))
+// 获取动态路由sider数据
+const localMenu = JSON.parse(localStorage.getItem('userInfo') || "{}").roleMenus
 // filter 是根据true/false 来判断，返回最后为true的数据
-var r = localMenu.filter(function (x) {
-  return x.name && x.hidden;
+var r = localMenu.filter(function (x:any) {
+  return x.name && x.isHidden;
 });
 datas.menus = r
+
+console.log(router.currentRoute.value, datas.menus, 'router')
 
 // 添加标签栏
 const changeSidebar = (index:string) => {
   console.log(router.getRoutes(), '添加页签', index)
   const allRoutes = router.getRoutes()
   const currentRoute = allRoutes.filter(x => {
-    return x.path === index
+    if (x.children.length > 0) {
+    for (let i = 0; i< x.children.length; i++) {
+        if (x.children[i].path === index) {
+          console.log( x.children[i], 'toPage')
+          datas.toPage = x.children[i]
+        }
+      }
+    }
+    return datas.toPage
+    // return x.path === index
   })
-  console.log(currentRoute,'1234')
-  mainStore.addTagsData(currentRoute[0]);
+  console.log(datas.toPage, currentRoute, '当前的路由--添加的页签')
+  mainStore.addTagsData(datas.toPage);
 };
 
-console.log(router.currentRoute.value.path,'000')
 </script>
 
 <style scoped>

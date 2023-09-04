@@ -23,6 +23,16 @@
               autocomplete="off"
           />
         </el-form-item>
+        <el-form-item label="角色" prop="password">
+          <el-select v-model="data.ruleForm.roleId" placeholder="请选择角色" @change="handleSelectRoles">
+            <el-option
+                v-for="item in options.rolesOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <div
             style="
             color: firebrick;
@@ -49,20 +59,70 @@
 <script lang="ts" setup>
 import { ElMessage } from "element-plus";
 import {LoginData} from "@/types/loginTypes";
-import {loginApi} from "@/http/api";
+import { getRoleMenus, loginApi } from "@/http/api";
 import {useRouter} from 'vue-router'
 import { reactive } from 'vue'
+
+import pinia from '../../store/store'
+// @ts-ignore
+import { useMenu } from "../../store/index"
+const store = useMenu(pinia)  // 这里一定要把 pinia传入进去
 // 接受ts定义的类型
 const data = reactive(new LoginData())
 const router = useRouter()
+
+/*
+  定义数据
+ */
+
+const options = reactive({
+  rolesOptions: [
+    {
+      value: 10,
+      label: '超级管理员'
+    },
+    {
+      value: 11,
+      label: '管理员'
+    },
+    {
+      value: 12,
+      label: '普通用户'
+    },
+    {
+      value: 13,
+      label: '兼职'
+    },
+  ]
+})
+
+/*
+  登陆接口
+ */
 const handleLogin = () => {
+  localStorage.clear()
   const {ruleForm} = data
   loginApi(ruleForm).then((res) => {
     console.log(res.data, "登录信息::::",);
     if (res.data.status === 0) {
-      localStorage.setItem("Authorization", JSON.stringify(res.data["token"]));
-      if (res.data["token"]) {
-        router.push("/");
+      localStorage.setItem("Authorization", res.data["token"]);
+      const authors = localStorage.getItem('Authorization')
+      if (authors) {
+        // 获取到token，通过选择的角色权限，获取菜单列表
+        getRoleMenus({roleId: res.data.roleId}).then(res => {
+          if (res.data.status !== 1) {
+            localStorage.setItem('userInfo', JSON.stringify(res.data.data))
+            /* Reflect.get(属性名，属性值key) 为了解决 返回的数据 为Proxy(Object)类型，取不到值 的问题 */
+            store.$state.staticRouter = Reflect.get(res.data.data, 'roleMenus')
+            console.log(store.$state.staticRouter, store.$state.staticRouter.length, '000')
+            if (store.$state.staticRouter.length > 0) {
+              store.$state.hasMenus = true
+              localStorage.setItem('hasMenus', 'true')
+              router.push("/");
+            }
+            console.log(store.$state, '获取动态的路由')
+          }
+        })
       }
     }
   });
@@ -70,6 +130,7 @@ const handleLogin = () => {
 const handleRegister = () => {
   router.push({path: 'register'});
 };
+
 </script>
 <style lang="scss" scoped>
 .loginContainer {

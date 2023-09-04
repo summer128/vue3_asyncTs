@@ -41,6 +41,8 @@ const visible = ref(false);
 const mainStore = useMenu();
 const { openPageTags } = storeToRefs(mainStore);
 
+console.log(openPageTags, 'openPageTags')
+
 const isActive = (val: any) => {
   console.log(router.currentRoute.value.path, val.path, '当前的数据')
   return router.currentRoute.value.path === val.path;

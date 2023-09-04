@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 
 interface States {
-    asyncRoute: any[]
+    asyncRoute: any[],
+    staticRouter: any[],
     hasMenus: boolean,
     siderIsFold: boolean,
     openPageTags: any[],
-
     isShowBread: boolean
 }
 export const useMenu = defineStore('menuId', {
@@ -13,6 +13,7 @@ export const useMenu = defineStore('menuId', {
     state: ():States => {
         return {
             asyncRoute: [],
+            staticRouter: [],
             hasMenus: true,
             siderIsFold: false,
             openPageTags: [], // 用于标签页,
@@ -36,5 +37,6 @@ export const useMenu = defineStore('menuId', {
         closeAllTags() {
             this.openPageTags = [];
         },
+
     },
 })

@@ -35,7 +35,8 @@ const http = axios.create({
 http.interceptors.request.use((config: AxiosRequestConfig) => {
     config.headers = config.headers || {}
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';  //此处是增加的代码，设置请求头的类型
-    if (localStorage.getItem('token')) {
+    console.log(localStorage.getItem('Authorization'), 'Authorization')
+    if (localStorage.getItem('Authorization')) {
         config.headers["Authorization"] = localStorage.getItem('Authorization') || ''
     }
 

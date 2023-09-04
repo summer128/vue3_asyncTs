@@ -1,13 +1,15 @@
 
 export interface LoginFormInt {
     username: string,
-    password: string
+    password: string,
+    roleId?: number
 }
 
 // 定义规则
 interface Rules {
     password: {trigger: string, message: string, required: boolean}[],
     username: {trigger: string, message: string, required: boolean}[]
+    roleId: {trigger: string, message: string, required: boolean}[]
 }
 
 /*
@@ -31,6 +33,13 @@ export class LoginData {
             {
                 required: true,
                 message: '请输入密码！',
+                trigger: 'change',
+            },
+        ],
+        roleId: [
+            {
+                required: true,
+                message: '请选择登陆的角色！',
                 trigger: 'change',
             },
         ],
